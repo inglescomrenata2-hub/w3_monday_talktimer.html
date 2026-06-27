@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Talk Timer · Will vs Going to | English Pocket Planner</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --cream:#F5F0E8;--paper:#EDE8DF;--rule:#D4CCC0;
+    --black:#1A1814;--charcoal:#2D2926;
+    --terra:#C2714F;--terra-light:#D4896A;
+    --muted:#6B6357;--white:#FDFAF5;
+    --success:#5B9E6B;
+  }
+  body{font-family:'Inter','Helvetica Neue',sans-serif;background:var(--cream);color:var(--black);min-height:100vh}
+
+  header{background:var(--white);border-bottom:1px solid var(--rule);padding:0 28px;display:flex;align-items:stretch;justify-content:space-between;min-height:52px}
+  .wordmark{display:flex;align-items:center;font-family:'Arial Black','Helvetica Neue',Helvetica,sans-serif;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;border-right:1px solid var(--rule);padding-right:20px;margin-right:20px}
+  .wordmark span{color:var(--terra)}
+  .hd-meta{display:flex;align-items:center;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#B5A48A}
+  .badge{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);font-weight:700;border:1px solid var(--terra);padding:4px 10px;display:flex;align-items:center}
+
+  .hero{background:var(--black);padding:40px 32px 36px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(194,113,79,.1)}
+  .eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+  .eyebrow::after{content:'';width:40px;height:1px;background:var(--terra);opacity:.4}
+  .hero h1{font-family:'Arial Black','Helvetica Neue',Helvetica,sans-serif;font-weight:900;font-size:36px;letter-spacing:-1.5px;color:var(--white);line-height:1.05}
+  .hero h1 em{font-family:'Georgia',serif;font-weight:400;font-style:italic;color:var(--terra);font-size:34px}
+  .hero-goal{font-size:13px;color:#B5A48A;margin-top:14px;line-height:1.6;max-width:500px}
+  .hero-goal strong{color:var(--white)}
+  .hero-tags{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+  .htag{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;padding:4px 10px;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.4)}
+  .htag.on{border-color:var(--terra);color:var(--terra)}
+
+  .wrap{max-width:660px;margin:0 auto;padding:36px 24px 80px}
+  .sec-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .sec-label::after{content:'';flex:1;height:1px;background:var(--rule)}
+
+  .ref-box{background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--terra);padding:20px 24px;margin-bottom:32px}
+  .ref-box h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:14px}
+  .ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .ref-col h5{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--charcoal);font-weight:700;margin-bottom:8px}
+  .ref-item{font-size:13px;color:var(--charcoal);line-height:1.6;margin-bottom:6px;display:flex;gap:8px}
+  .ref-item::before{content:'◆';color:var(--terra);font-size:8px;margin-top:4px;flex-shrink:0}
+  .ref-ex{background:var(--cream);border:1px solid var(--rule);padding:10px 14px;margin-top:10px;font-size:12px;color:var(--charcoal);line-height:1.8;font-style:italic}
+
+  .topics-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:32px}
+  .topic-btn{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--white);border:1px solid var(--rule);cursor:pointer;text-align:left;transition:all .15s;width:100%}
+  .topic-btn:hover{border-color:var(--terra)}
+  .topic-btn.active{border-color:var(--black);background:var(--black)}
+  .topic-num{font-family:'Arial Black',Helvetica,sans-serif;font-size:11px;font-weight:900;color:var(--terra);min-width:20px;letter-spacing:1px}
+  .topic-info{flex:1}
+  .topic-name{font-size:14px;font-weight:600;color:var(--black);margin-bottom:3px}
+  .topic-btn.active .topic-name{color:var(--white)}
+  .topic-focus{font-size:11px;color:var(--muted)}
+  .topic-btn.active .topic-focus{color:#B5A48A}
+  .topic-dur{font-size:11px;letter-spacing:1px;color:var(--muted);font-weight:600;border:1px solid var(--rule);padding:3px 8px;flex-shrink:0}
+  .topic-btn.active .topic-dur{border-color:rgba(255,255,255,.2);color:#B5A48A}
+  .topic-done{font-size:14px;flex-shrink:0}
+
+  .tips-box{background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--terra);padding:20px 24px;margin-bottom:32px}
+  .tips-box h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:12px}
+  .tip-item{display:flex;gap:10px;font-size:13px;color:var(--charcoal);line-height:1.5;margin-bottom:8px}
+  .tip-item:last-child{margin-bottom:0}
+  .tip-item::before{content:'→';color:var(--terra);flex-shrink:0}
+
+  .timer-card{background:var(--black);padding:32px;margin-bottom:28px;position:relative;overflow:hidden}
+  .timer-card::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;border:1px solid rgba(194,113,79,.08)}
+  .timer-eyebrow{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--terra);font-weight:700;margin-bottom:10px}
+  .timer-topic{font-family:'Georgia',serif;font-style:italic;font-size:20px;color:var(--white);margin-bottom:6px;line-height:1.3}
+  .timer-prompt{font-size:13px;color:#B5A48A;margin-bottom:10px;line-height:1.6;max-width:480px}
+  .timer-goals{display:flex;flex-direction:column;gap:6px;margin-bottom:24px;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+  .goal-item{display:flex;gap:8px;font-size:12px;color:#B5A48A;line-height:1.5}
+  .goal-item::before{content:'→';color:var(--terra);flex-shrink:0}
+  .goal-item strong{color:var(--terra)}
+
+  .timer-circle-wrap{display:flex;justify-content:center;margin-bottom:24px}
+  .circle-svg{transform:rotate(-90deg)}
+  .circle-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:6}
+  .circle-fill{fill:none;stroke:var(--terra);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s linear;stroke-dasharray:408;stroke-dashoffset:408}
+  .circle-fill.warning{stroke:#D4A84B}
+  .circle-fill.danger{stroke:var(--terra-light);animation:pulse 1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .timer-inner{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .timer-digits{font-family:'Arial Black',Helvetica,sans-serif;font-size:44px;font-weight:900;color:var(--white);letter-spacing:-2px;line-height:1}
+  .timer-unit{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#B5A48A;margin-top:4px}
+
+  .phase-bar{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+  .phase-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12);transition:background .3s}
+  .phase-dot.done{background:var(--success)}
+  .phase-dot.active{background:var(--terra)}
+
+  .controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .btn-start{background:var(--terra);color:var(--white);border:none;padding:13px 32px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+  .btn-start:hover{background:var(--terra-light)}
+  .btn-start:disabled{opacity:.35;cursor:default}
+  .btn-skip{background:transparent;color:#B5A48A;border:1px solid rgba(255,255,255,.15);padding:12px 20px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:none}
+  .btn-skip:hover{border-color:rgba(255,255,255,.35);color:var(--white)}
+  .btn-reset-sm{background:transparent;color:#B5A48A;border:1px solid rgba(255,255,255,.1);padding:12px 16px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+
+  .toast{display:none;padding:10px 16px;font-size:12px;font-weight:600;text-align:center;margin-bottom:12px}
+  .toast.show{display:block;background:var(--success);color:var(--white)}
+  .toast.warn{background:#D4A84B;color:var(--white)}
+
+  .results-card{display:none;background:var(--white);border:1px solid var(--rule);padding:32px;margin-top:8px}
+  .results-card.show{display:block}
+  .results-title{font-family:'Arial Black',Helvetica,sans-serif;font-size:20px;font-weight:900;letter-spacing:-0.5px;color:var(--black);margin-bottom:4px}
+  .results-sub{font-size:12px;color:var(--muted);margin-bottom:24px}
+  .result-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--rule)}
+  .result-row:last-of-type{border-bottom:none}
+  .rr-num{font-family:'Arial Black',Helvetica,sans-serif;font-size:11px;font-weight:900;color:var(--terra);min-width:20px}
+  .rr-info{flex:1}
+  .rr-name{font-size:14px;font-weight:600;color:var(--black);margin-bottom:2px}
+  .rr-time{font-size:12px;color:var(--muted)}
+  .rr-bar-wrap{width:100px;height:4px;background:var(--paper);border-radius:99px;overflow:hidden}
+  .rr-bar{height:100%;background:var(--terra);border-radius:99px}
+  .rr-status{font-size:10px;font-weight:700;letter-spacing:1px;min-width:48px;text-align:right}
+  .rr-status.full{color:var(--success)}
+  .rr-status.partial{color:#D4A84B}
+  .rr-status.skipped{color:var(--muted)}
+  .results-msg{background:var(--cream);border:1px solid var(--rule);padding:16px 20px;margin-top:20px;font-size:13px;color:var(--charcoal);line-height:1.7}
+  .results-msg strong{color:var(--terra)}
+  .btn-restart{background:var(--black);color:var(--cream);border:none;padding:13px 28px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:20px}
+
+  @media(max-width:580px){
+    .hero{padding:28px 20px}.hero h1{font-size:26px}.hero h1 em{font-size:24px}
+    .wrap{padding:28px 16px 60px}.header{padding:0 16px}
+    .controls{flex-direction:column;align-items:stretch;text-align:center}
+    .timer-digits{font-size:36px}.ref-grid{grid-template-columns:1fr}
+    .rr-bar-wrap{width:60px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center">
+    <div class="wordmark">Renata<span>em</span>Inglês</div>
+    <span class="hd-meta">English Pocket Planner</span>
+  </div>
+  <div style="display:flex;align-items:center">
+    <span class="badge">Week 3 · Monday</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">Talk Timer · Week 3 · Monday</div>
+  <h1>Will vs<br><em>Going to</em></h1>
+  <p class="hero-goal"><strong>Goal:</strong> Use will and going to naturally in real-life contexts — your work, your plans, your everyday decisions.</p>
+  <div class="hero-tags">
+    <span class="htag on">Will — predictions</span>
+    <span class="htag on">Going to — plans</span>
+    <span class="htag on">Instant decisions</span>
+    <span class="htag on">Real life</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec-label">Quick rule reminder</div>
+  <div class="ref-box">
+    <h4>◆ Will vs Going to — when to use each</h4>
+    <div class="ref-grid">
+      <div class="ref-col">
+        <h5>Will</h5>
+        <div class="ref-item">Predictions — things you think will happen: <br><em>"I think it'll be a busy year."</em></div>
+        <div class="ref-item">Instant decisions — decided right now: <br><em>"I'll call her back."</em></div>
+        <div class="ref-item">Offers & promises: <br><em>"I'll help you with that."</em></div>
+      </div>
+      <div class="ref-col">
+        <h5>Going to</h5>
+        <div class="ref-item">Plans already decided: <br><em>"I'm going to start a new project next month."</em></div>
+        <div class="ref-item">Predictions with evidence: <br><em>"Look at that schedule — it's going to be crazy."</em></div>
+        <div class="ref-item">Intentions: <br><em>"I'm going to focus on speaking this year."</em></div>
+      </div>
+    </div>
+    <div class="ref-ex">"I'll answer that" (spontaneous) vs "I'm going to answer all emails before lunch" (already planned)</div>
+  </div>
+
+  <div class="sec-label">Topics</div>
+  <div class="topics-grid" id="topicsList"></div>
+
+  <div class="tips-box">
+    <h4>◆ Speaking Tips</h4>
+    <div class="tip-item">Antes de começar, pense: <strong>este plano já estava decidido?</strong> → going to. <strong>Decidi agora?</strong> → will.</div>
+    <div class="tip-item">Se travar, use "I think…" + will ou "I'm planning to…" + going to para comprar tempo.</div>
+    <div class="tip-item">Não pare se errar — native speakers às vezes usam will e going to de forma intercambiável. O contexto é o que importa.</div>
+    <div class="tip-item">Grave o áudio — ouça e conte quantas vezes usou cada forma.</div>
+  </div>
+
+  <div class="sec-label">Timer</div>
+  <div class="timer-card">
+    <div class="toast" id="toast"></div>
+    <div class="timer-eyebrow">Speaking Sprint</div>
+    <div class="timer-topic" id="timerTopic">Selecione um tópico acima</div>
+    <div class="timer-prompt" id="timerPrompt">Escolha um tópico para ver o prompt aqui.</div>
+    <div class="timer-goals" id="timerGoals" style="display:none"></div>
+    <div class="phase-bar" id="phasebar"></div>
+    <div class="timer-circle-wrap">
+      <div style="position:relative;width:160px;height:160px;display:flex;align-items:center;justify-content:center">
+        <svg class="circle-svg" width="160" height="160" viewBox="0 0 140 140">
+          <circle class="circle-bg" cx="70" cy="70" r="65"/>
+          <circle class="circle-fill" id="circleArc" cx="70" cy="70" r="65"/>
+        </svg>
+        <div class="timer-inner">
+          <div class="timer-digits" id="timerDisplay">—</div>
+          <div class="timer-unit" id="timerUnit">select topic</div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn-start" id="btnStart" onclick="handleStart()" disabled>Start →</button>
+      <button class="btn-skip" id="btnSkip" onclick="skipTopic()">Skip topic</button>
+      <button class="btn-reset-sm" onclick="resetTimer()">↺ Reset</button>
+    </div>
+  </div>
+
+  <div class="results-card" id="resultsCard">
+    <div class="results-title">Session Complete</div>
+    <div class="results-sub" id="resultsSub"></div>
+    <div id="resultsList"></div>
+    <div class="results-msg" id="resultsMsg"></div>
+    <button class="btn-restart" onclick="restartAll()">↺ Praticar novamente</button>
+  </div>
+
+</div>
+
+<script>
+const TOPICS = [
+  {
+    id:1, label:"01", duration:60,
+    name:"Your work week ahead",
+    focus:"Going to — plans already decided",
+    prompt:"Talk about your work week. What are you going to do? What tasks have you already planned? What do you think will be the most challenging part?",
+    goals:[
+      "<strong>Going to</strong> for tasks already on your schedule: 'I'm going to prepare a class on…'",
+      "<strong>Will</strong> for predictions: 'I think it'll be a busy week because…'",
+      "Use time markers: this week, on Monday, by Friday, next month…"
+    ]
+  },
+  {
+    id:2, label:"02", duration:60,
+    name:"A decision you're making right now",
+    focus:"Will — instant decisions & offers",
+    prompt:"Talk about something you're deciding right now — a purchase, a change in routine, a message you need to send. What will you do? Why did you just decide that?",
+    goals:[
+      "<strong>Will</strong> for spontaneous decisions: 'I'll start tomorrow. I'll do it after this.'",
+      "Use 'I think I'll…' to soften predictions about your own choices",
+      "Be specific — use a real decision you're actually facing right now"
+    ]
+  },
+  {
+    id:3, label:"03", duration:90,
+    name:"Your plans for the next 3 months",
+    focus:"Going to — intentions & plans",
+    prompt:"Talk about what you're going to do in the next 3 months. Work projects, personal goals, trips, habits you want to build — what have you already decided?",
+    goals:[
+      "<strong>Going to</strong> for all plans already decided: 'I'm going to launch…', 'I'm going to start…'",
+      "<strong>Will</strong> for predictions about the outcome: 'I think it'll change…', 'It probably won't be easy but…'",
+      "Use at least 5 different going to sentences — make them as specific as possible"
+    ]
+  },
+  {
+    id:4, label:"04", duration:60,
+    name:"What do you think will change?",
+    focus:"Will — predictions about life & the world",
+    prompt:"Talk about predictions — your life, your career, your city, technology, or the world. What do you think will change in the next 5 years? What won't change?",
+    goals:[
+      "<strong>Will / won't</strong> for predictions: 'I think AI will…', 'I don't think people will…'",
+      "Use hedging language: 'I think…', 'I believe…', 'I'm not sure, but…', 'Probably…'",
+      "Use both positive and negative forms: will + won't"
+    ]
+  },
+  {
+    id:5, label:"05", duration:90,
+    name:"Plans & predictions — your year",
+    focus:"Will + Going to — full output",
+    prompt:"Tell me about your year. What are you going to do (plans)? What do you think will happen (predictions)? What won't you do anymore? What have you already decided to change?",
+    goals:[
+      "Mix <strong>will</strong> and <strong>going to</strong> naturally — at least 3 of each",
+      "Use contrast: 'I used to… but now I'm going to…' / 'Last year I thought… but now I think I'll…'",
+      "End with: 'I think this year will be different because…'"
+    ]
+  },
+];
+
+const CIRCUMFERENCE=2*Math.PI*65;
+let currentIdx=null,timerInterval=null,timeLeft=0,totalTime=0,isRunning=false,sessionResults=[];
+
+function fmt(s){const m=Math.floor(s/60),sec=s%60;return m>0?`${m}:${sec.toString().padStart(2,'0')}`:String(s);}
+
+function renderTopics(){
+  const grid=document.getElementById('topicsList');
+  grid.innerHTML='';
+  TOPICS.forEach((t,i)=>{
+    const done=sessionResults.find(r=>r.id===t.id);
+    const active=currentIdx===i;
+    const btn=document.createElement('button');
+    btn.className='topic-btn'+(active?' active':'');
+    btn.onclick=()=>selectTopic(i);
+    btn.innerHTML=`
+      <span class="topic-num">${t.label}</span>
+      <div class="topic-info">
+        <div class="topic-name">${t.name}</div>
+        <div class="topic-focus">${t.focus}</div>
+      </div>
+      <span class="topic-dur">${fmt(t.duration)}</span>
+      <span class="topic-done">${done?(done.completed?'✅':'⏭'):''}</span>`;
+    grid.appendChild(btn);
+  });
+}
+
+function renderPhasebar(){
+  const bar=document.getElementById('phasebar');
+  bar.innerHTML='';
+  TOPICS.forEach((_,i)=>{
+    const done=sessionResults.find(r=>r.id===TOPICS[i].id);
+    const dot=document.createElement('div');
+    dot.className='phase-dot'+(done?' done':(currentIdx===i?' active':''));
+    bar.appendChild(dot);
+  });
+}
+
+function selectTopic(idx){
+  if(isRunning)return;
+  currentIdx=idx;
+  const t=TOPICS[idx];
+  timeLeft=t.duration;totalTime=t.duration;
+  document.getElementById('timerTopic').textContent=t.name;
+  document.getElementById('timerPrompt').textContent=t.prompt;
+  const g=document.getElementById('timerGoals');
+  g.style.display='flex';
+  g.innerHTML=t.goals.map(gl=>`<div class="goal-item">${gl}</div>`).join('');
+  document.getElementById('timerDisplay').textContent=fmt(timeLeft);
+  document.getElementById('timerUnit').textContent=timeLeft>=60?'minutes':'seconds';
+  document.getElementById('btnStart').disabled=false;
+  document.getElementById('btnStart').textContent='Start →';
+  document.getElementById('btnSkip').style.display='none';
+  updateArc(1,1);
+  document.getElementById('circleArc').classList.remove('warning','danger');
+  renderTopics();renderPhasebar();
+}
+
+function updateArc(left,total){
+  const arc=document.getElementById('circleArc');
+  const pct=left/total;
+  arc.style.strokeDashoffset=CIRCUMFERENCE*(1-pct);
+  arc.classList.remove('warning','danger');
+  if(pct<=0.25&&pct>0.1)arc.classList.add('warning');
+  else if(pct<=0.1)arc.classList.add('danger');
+}
+
+function handleStart(){if(currentIdx===null)return;isRunning?pauseTimer():startTimer();}
+function startTimer(){isRunning=true;document.getElementById('btnStart').textContent='Pause ⏸';document.getElementById('btnSkip').style.display='inline-block';timerInterval=setInterval(tick,1000);}
+function pauseTimer(){isRunning=false;clearInterval(timerInterval);document.getElementById('btnStart').textContent='Resume →';}
+
+function tick(){
+  timeLeft--;
+  document.getElementById('timerDisplay').textContent=fmt(timeLeft);
+  document.getElementById('timerUnit').textContent=timeLeft>=60?'minutes':'seconds';
+  updateArc(timeLeft,totalTime);
+  if(timeLeft===30)showToast('30 seconds — wrap it up!','warn');
+  if(timeLeft===10)showToast('10 seconds… finish your thought!','warn');
+  if(timeLeft<=0){clearInterval(timerInterval);isRunning=false;completeTopic(true);}
+}
+
+function skipTopic(){clearInterval(timerInterval);isRunning=false;completeTopic(false);}
+
+function completeTopic(completed){
+  const t=TOPICS[currentIdx];
+  const elapsed=totalTime-timeLeft;
+  sessionResults.push({id:t.id,name:t.name,elapsed,total:totalTime,completed});
+  showToast(completed?'✓ Great job!':'⏭ Skipped.');
+  document.getElementById('btnStart').textContent='Start →';
+  document.getElementById('btnSkip').style.display='none';
+  document.getElementById('btnStart').disabled=true;
+  document.getElementById('timerDisplay').textContent='✓';
+  document.getElementById('timerUnit').textContent='done';
+  renderTopics();renderPhasebar();
+  setTimeout(()=>{const next=findNext();if(next!==null)selectTopic(next);else showResults();},1800);
+}
+
+function findNext(){
+  const doneIds=sessionResults.map(r=>r.id);
+  for(let i=0;i<TOPICS.length;i++)if(!doneIds.includes(TOPICS[i].id))return i;
+  return null;
+}
+
+function resetTimer(){
+  clearInterval(timerInterval);isRunning=false;
+  if(currentIdx!==null){
+    const t=TOPICS[currentIdx];
+    timeLeft=t.duration;totalTime=t.duration;
+    document.getElementById('timerDisplay').textContent=fmt(timeLeft);
+    document.getElementById('timerUnit').textContent=timeLeft>=60?'minutes':'seconds';
+    updateArc(1,1);
+    document.getElementById('circleArc').classList.remove('warning','danger');
+    document.getElementById('btnStart').textContent='Start →';
+    document.getElementById('btnStart').disabled=false;
+    document.getElementById('btnSkip').style.display='none';
+  }
+}
+
+function showResults(){
+  const card=document.getElementById('resultsCard');
+  card.classList.add('show');
+  const completed=sessionResults.filter(r=>r.completed).length;
+  const totalElapsed=sessionResults.reduce((s,r)=>s+r.elapsed,0);
+  const mins=Math.floor(totalElapsed/60),secs=totalElapsed%60;
+  document.getElementById('resultsSub').textContent=`${completed} of ${TOPICS.length} topics completed · ${mins}m ${secs}s total speaking time`;
+  const list=document.getElementById('resultsList');
+  list.innerHTML='';
+  sessionResults.forEach((r,i)=>{
+    const pct=Math.min(100,Math.round((r.elapsed/r.total)*100));
+    const sc=r.completed?'full':r.elapsed>0?'partial':'skipped';
+    const sl=r.completed?'FULL':r.elapsed>0?'PARTIAL':'SKIP';
+    list.innerHTML+=`<div class="result-row">
+      <span class="rr-num">0${i+1}</span>
+      <div class="rr-info"><div class="rr-name">${r.name}</div><div class="rr-time">Spoke for ${r.elapsed}s of ${r.total}s</div></div>
+      <div class="rr-bar-wrap"><div class="rr-bar" style="width:${pct}%"></div></div>
+      <span class="rr-status ${sc}">${sl}</span>
+    </div>`;
+  });
+  let msg='';
+  if(completed===TOPICS.length)msg=`<strong>Excellent session!</strong> You used will and going to in real contexts — your work, your plans, your predictions. That's the difference between knowing the rule and actually speaking it. Tomorrow, bring this into your Present Continuous practice.`;
+  else if(completed>=3)msg=`<strong>Strong session!</strong> ${completed} topics done. The key skill this week is choosing will vs going to without thinking about it. Keep going — the more you speak, the more automatic it becomes.`;
+  else msg=`<strong>Good start!</strong> Even ${mins}m ${secs}s of real practice matters. Try the topics you skipped — especially "Your plans for the next 3 months." That's where going to really clicks.`;
+  document.getElementById('resultsMsg').innerHTML=msg;
+  card.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function restartAll(){
+  sessionResults=[];currentIdx=null;
+  clearInterval(timerInterval);isRunning=false;
+  document.getElementById('resultsCard').classList.remove('show');
+  document.getElementById('timerTopic').textContent='Selecione um tópico acima';
+  document.getElementById('timerPrompt').textContent='Escolha um tópico para ver o prompt aqui.';
+  document.getElementById('timerGoals').style.display='none';
+  document.getElementById('timerDisplay').textContent='—';
+  document.getElementById('timerUnit').textContent='select topic';
+  document.getElementById('btnStart').disabled=true;
+  document.getElementById('btnStart').textContent='Start →';
+  document.getElementById('btnSkip').style.display='none';
+  document.getElementById('circleArc').style.strokeDashoffset=CIRCUMFERENCE;
+  renderTopics();renderPhasebar();
+}
+
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(type?' '+type:'');
+  setTimeout(()=>t.className='toast',2500);
+}
+
+renderTopics();renderPhasebar();
+</script>
+</body>
+</html>
